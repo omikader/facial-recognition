@@ -1,7 +1,7 @@
 function [ projected ] = mda( data )
 %MDA Reduces the data parameter down to a lower dimension of num_classes -
 %1.
-%   projected = mda(data) will return a dataset with a lower first
+%   projected = MDA(data) will return a dataset with a lower first
 %   dimension of num_classes - 1.
 
 num_features = size(data, 1);
@@ -11,7 +11,7 @@ num_samples_per_class = size(data, 2);
 Sw = zeros(num_features, num_features);
 m = zeros(num_features, 1);
 
-% Compute the within class scatter matrix and total mean vectors
+% Compute the within class scatter matrix and total mean vector
 
 for i = 1:num_classes
     sum = zeros(num_features, 1);

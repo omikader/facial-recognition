@@ -1,7 +1,7 @@
 function [ predictions ] = k_nn( k, training_data, testing_data )
 %K_NN Classifies each test sample based on the label of the majority of its
 %k nearest training sample neighbors.
-%   predictions = k_nn(k, training_data, testing_data) will return a matrix
+%   predictions = K_NN(k, training_data, testing_data) will return a matrix
 %   with the prediction for each test data point.
 
 num_classes = size(testing_data, 3);

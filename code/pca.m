@@ -1,7 +1,7 @@
 function [ projected ] = pca( data, alpha )
 %PCA Reduces the data parameter down to a lower dimension according to the
 %second parameter alpha, the amount of energy willing to sacrifice.
-%   projected = pca(data, alpha) will return a dataset with a lower first
+%   projected = PCA(data, alpha) will return a dataset with a lower first
 %   dimension.
 
 num_features = size(data, 1);
