@@ -11,7 +11,7 @@ load('Data/face.mat')
 
 %% Preprocess Data
 % Separate images by class and reshape images into vector form. Split data
-% into training (2/3) and testing (1/3)
+% into training (~2/3) and testing (~1/3)
 
 data = zeros(size(face, 1) * size(face, 2), 3, 200);
 
@@ -24,19 +24,33 @@ end
 training_data = data(:, 1:2, :);
 testing_data = data(:, 3, :);
 
-%% Maximum Likelihood
+%% Bayesian Classification
 % Use maximum likelihood estimation with Gaussian assumption to estimate
-% parameters mu and sigma
+% parameters mu and sigma. Then use Bayes' classifier to classify the
+% photos in the face dataset.
 
 [mu, sigma] = mle(training_data);
 
-%% Bayesian Classification
-% Use Bayes' classifier to classify the photos
-
-predictions = bayes(mu, sigma, testing_data);
+bayesian_predictions = bayes(mu, sigma, testing_data);
+bayesian_accuracy = get_accuracy(predictions, testing_data);
 
 %% K-Nearest Neighbors Classification
+% Use K-Nearest Neighbors to classify the photos in the face dataset
+
+k = 1;
+k_nn_predictions = k_nn(k, training_data, testing_data);
+k_nn_accuracy = get_accuracy(predictions, testing_data);
 
 %% Principal Component Analysis (PCA)
+% Use principal component analysis to reduce the photos down to a lower
+% dimension feature set. Parameter alpha to choose how much energy willing
+% to sacrifice.
 
-%% Fisher's Linear Discriminant Analysis (LDA)
+alpha = 0.05;
+pca_projected = pca(data, alpha);
+
+%% Fisher's Multiple Discriminant Analysis (MDA)
+% Use Fisher's linear discriminant analysis technique (generalized for 'c'
+% classes) for dimensionality reduction.
+
+mda_projected = mda(data);
