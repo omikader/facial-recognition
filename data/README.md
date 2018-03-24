@@ -23,7 +23,7 @@ illumination.mat
 
 	68 subjects
 	21 images per subject (21 different illuminations)
-	size: 48x40
+	size: 48 x 40
 
 	The file 'illumination.mat' has a variable "illum" of size 1920x21x68.
 	reshape(illum(:, i,j), 48, 40) gives i^th image of j^th subject.
