@@ -32,14 +32,14 @@ testing_data = data(:, 3, :);
 [mu, sigma] = mle(training_data);
 
 bayesian_predictions = bayes(mu, sigma, testing_data);
-bayesian_accuracy = get_accuracy(predictions, testing_data);
+bayesian_accuracy = get_accuracy(bayesian_predictions, testing_data);
 
 %% K-Nearest Neighbors Classification
 % Use K-Nearest Neighbors to classify the photos in the face dataset
 
 k = 1;
 k_nn_predictions = k_nn(k, training_data, testing_data);
-k_nn_accuracy = get_accuracy(predictions, testing_data);
+k_nn_accuracy = get_accuracy(k_nn_predictions, testing_data);
 
 %% Principal Component Analysis (PCA)
 % Use principal component analysis to reduce the photos down to a lower
