@@ -7,7 +7,7 @@
 %% Load Variables
 % Images loaded in .mat format
 
-load('Data/pose.mat')
+load('data/pose.mat')
 
 %% Preprocess Data
 % Reshape images into vector form. Split data into training (~2/3) and

@@ -7,7 +7,7 @@
 %% Load Variables
 % Images loaded in .mat format
 
-load('Data/face.mat')
+load('data/face.mat')
 
 %% Preprocess Data
 % Separate images by class and reshape images into vector form. Split data

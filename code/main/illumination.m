@@ -7,7 +7,7 @@
 %% Load Variables
 % Images loaded in .mat format
 
-load('Data/illumination.mat')
+load('data/illumination.mat')
 
 %% Preprocess Data
 % No need, images have alread been reshaped to vector form. Split data into
