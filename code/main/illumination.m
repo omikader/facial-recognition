@@ -9,12 +9,11 @@
 
 load('data/illumination.mat')
 
-%% Preprocess Data
-% No need, images have alread been reshaped to vector form. Split data into
-% training (~2/3) and testing (~1/3)
+%% Divide Data
+% Split data into training (~3/4) and testing (~1/4).
 
-training_data = illum(:,1:14,:);
-testing_data = illum(:,15:21,:);
+training_data = illum(:, 1:16, :);
+testing_data = illum(:, 17:21, :);
 
 %% Bayesian Classification
 % Use maximum likelihood estimation with Gaussian assumption to estimate
@@ -35,15 +34,15 @@ k_nn_predictions = k_nn(k, training_data, testing_data);
 k_nn_accuracy = get_accuracy(k_nn_predictions, testing_data);
 
 %% Principal Component Analysis (PCA)
-% Use principal component analysis to reduce the photos down to a lower
-% dimension feature set. Parameter alpha to choose how much energy willing
-% to sacrifice.
+% Use principal component analysis to reduce the images in the training set
+% down to a lower dimension feature set. Parameter alpha to choose how much
+% energy willing to sacrifice.
 
 alpha = 0.05;
-pca_projected = pca(data, alpha);
+pca_projected = pca(training_data, alpha);
 
 %% Fisher's Multiple Discriminant Analysis (MDA)
 % Use Fisher's linear discriminant analysis technique (generalized for 'c'
 % classes) for dimensionality reduction.
 
-mda_projected = mda(data);
+mda_projected = mda(training_data);

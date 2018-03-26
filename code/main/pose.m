@@ -10,8 +10,7 @@
 load('data/pose.mat')
 
 %% Preprocess Data
-% Reshape images into vector form. Split data into training (~2/3) and
-% testing (~1/3)
+% Reshape images into vector form.
 
 data = zeros(size(pose, 1) * size(pose, 2), 13, 68);
 
@@ -21,8 +20,11 @@ for n = 1:size(pose, 3)
     end
 end
         
-training_data = data(:,1:9,:);
-testing_data = data(:,10:13,:);
+%% Divide Data
+% Split data into training (~3/4) and testing (~1/4).
+
+training_data = data(:, 1:10, :);
+testing_data = data(:, 11:13, :);
 
 %% Bayesian Classification
 % Use maximum likelihood estimation with Gaussian assumption to estimate
@@ -42,15 +44,15 @@ k_nn_predictions = k_nn(k, training_data, testing_data);
 k_nn_accuracy = get_accuracy(k_nn_predictions, testing_data);
 
 %% Principal Component Analysis (PCA)
-% Use principal component analysis to reduce the photos down to a lower
-% dimension feature set. Parameter alpha to choose how much energy willing
-% to sacrifice.
+% Use principal component analysis to reduce the images in the training set
+% down to a lower dimension feature set. Parameter alpha to choose how much
+% energy willing to sacrifice.
 
 alpha = 0.05;
-pca_projected = pca(data, alpha);
+pca_projected = pca(training_data, alpha);
 
 %% Fisher's Multiple Discriminant Analysis (MDA)
 % Use Fisher's linear discriminant analysis technique (generalized for 'c'
 % classes) for dimensionality reduction.
 
-mda_projected = mda(data);
+mda_projected = mda(training_data);
