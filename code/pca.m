@@ -1,21 +1,21 @@
-function [ projected ] = pca( data, alpha )
+function [ projected ] = pca( training_data, alpha )
 %PCA Reduces the data parameter down to a lower dimension according to the
 %second parameter alpha, the amount of energy willing to sacrifice.
-%   projected = PCA(data, alpha) will return a dataset with a lower first
-%   dimension.
+%   projected = PCA(training_data, alpha) will return a dataset with a 
+%   lower first dimension.
 
-num_features = size(data, 1);
-num_classes = size(data, 3);
-num_samples_per_class = size(data, 2);
+num_features = size(training_data, 1);
+num_classes = size(training_data, 3);
+num_samples_per_class = size(training_data, 2);
 
 % Center the datapoints
 
-centered = zeros(size(data));
-mean = zeros(size(data, 1), 1);
+centered = zeros(size(training_data));
+mean = zeros(size(training_data, 1), 1);
 
 for i = 1:num_classes
     for n = 1:num_samples_per_class
-        mean = mean + data(:, n, i);
+        mean = mean + training_data(:, n, i);
     end
 end
 
@@ -23,7 +23,7 @@ mean = mean / (num_classes * num_samples_per_class);
 
 for i = 1:num_classes
     for n = 1:num_samples_per_class
-        centered(:, n, i) = data(:, n, i) - mean;
+        centered(:, n, i) = training_data(:, n, i) - mean;
     end
 end
 
@@ -68,6 +68,6 @@ projected = zeros(dimensions, num_samples_per_class, num_classes);
 
 for i = 1:num_classes
     for n = 1:num_samples_per_class
-        projected(:, n, i) = W * data(:, n, i);
+        projected(:, n, i) = W * training_data(:, n, i);
     end
 end

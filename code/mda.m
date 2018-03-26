@@ -1,12 +1,12 @@
-function [ projected ] = mda( data )
-%MDA Reduces the data parameter down to a lower dimension of num_classes -
-%1.
+function [ projected ] = mda( training_data )
+%MDA Reduces the data parameter down to a lower dimension set of size c-1,
+%where c is the number of classes.
 %   projected = MDA(data) will return a dataset with a lower first
 %   dimension of num_classes - 1.
 
-num_features = size(data, 1);
-num_classes = size(data, 3);
-num_samples_per_class = size(data, 2);
+num_features = size(training_data, 1);
+num_classes = size(training_data, 3);
+num_samples_per_class = size(training_data, 2);
 
 Sw = zeros(num_features, num_features);
 m = zeros(num_features, 1);
@@ -16,14 +16,14 @@ m = zeros(num_features, 1);
 for i = 1:num_classes
     sum = zeros(num_features, 1);
     for n = 1:num_samples_per_class
-        sum = sum + data(:, n, i);
-        m = m + data(:, n, i);
+        sum = sum + training_data(:, n, i);
+        m = m + training_data(:, n, i);
     end
     m_i = sum / n;
     
     Sw_i = zeros(num_features, num_features);
     for n = 1:num_samples_per_class
-        Sw_i = Sw_i + ((data(:, n, i) - m_i) * (data(:, n, i) - m_i)');
+        Sw_i = Sw_i + ((training_data(:, n, i) - m_i) * (training_data(:, n, i) - m_i)');
     end
     Sw = Sw + Sw_i;
 end
@@ -35,7 +35,7 @@ m = m / (num_classes * num_samples_per_class);
 St = zeros(num_features, num_features);
 for i = 1:num_classes
     for n = 1:num_samples_per_class
-        St = St + ((data(:, n, i) - m) * (data(:, n, i) - m)');
+        St = St + ((training_data(:, n, i) - m) * (training_data(:, n, i) - m)');
     end
 end
 
@@ -59,7 +59,7 @@ projected = zeros(num_classes - 1, num_samples_per_class, num_classes);
 
 for i = 1:num_classes
     for n = 1:num_samples_per_class
-        projected(:, n, i) = W * data(:, n, i);
+        projected(:, n, i) = W * training_data(:, n, i);
     end
 end
 
