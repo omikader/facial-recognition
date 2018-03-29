@@ -7,7 +7,7 @@ For a formal definition of the assignment, please see the project [syllabus](doc
 
 ## How to Run the Code
 
-In order to keep the code readable and modular, each of the classifier and dimensions reduction techniques have been implemented in separate MATLAB functions in the top level of the [code](code/) directory. Helper functions are conveniently located in the [utils](code/utils/) directory. Each dataset is handled in separate MATLAB scripts in the [main](code/main/) directory.
+In order to keep the code readable and modular, each of the classifier and dimension reduction techniques have been implemented in separate MATLAB functions located at the top level of the [code](code/) directory. Helper functions are conveniently located in the [utils](code/utils/) directory. Each dataset is processed in separate MATLAB scripts located in the [main](code/main/) directory.
 
 For each dataset, I divide the script into the following sections:
 
