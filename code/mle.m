@@ -2,7 +2,7 @@ function [ mu, sigma ] = mle( training_data )
 %MLE Computes the sample mean and variance of data presumed to be Gaussian
 %   [mu, sigma] = MLE(num_dimensions, training_data) will use maximum
 %   likelihood esimtation to determine the optimal Gaussian sample mean and
-%   variance for each class in the given training data
+%   variance for each class in the given training data.
 
 num_features = size(training_data, 1);
 num_classes = size(training_data, 3);
