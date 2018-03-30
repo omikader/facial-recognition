@@ -39,10 +39,10 @@ k_nn_accuracy = get_accuracy(k_nn_predictions, testing_data);
 % energy willing to sacrifice.
 
 alpha = 0.05;
-pca_projected = pca(training_data, alpha);
+W_pca = pca(training_data, alpha);
 
 %% Fisher's Multiple Discriminant Analysis (MDA)
 % Use Fisher's linear discriminant analysis technique (generalized for 'c'
 % classes) for dimensionality reduction.
 
-mda_projected = mda(training_data);
+W_mda = mda(training_data);

@@ -1,8 +1,10 @@
-function [ projected ] = mda( training_data )
-%MDA Reduces the data parameter down to a lower dimension set of size c-1,
-%where c is the number of classes.
-%   projected = MDA(data) will return a dataset with a lower first
-%   dimension of num_classes - 1.
+function [ principal_components ] = mda(training_data)
+%MDA Returns the c-1 principal components in the form of a matrix, where c
+%is the total number of classes using Fisher's multiple discriminant
+%analysis.
+
+%   W = MDA(training_data) will return the principal components of the
+%   training data.
 
 num_features = size(training_data, 1);
 num_classes = size(training_data, 3);
@@ -21,11 +23,11 @@ for i = 1:num_classes
     end
     m_i = sum / n;
     
-    Sw_i = zeros(num_features, num_features);
+    S_i = zeros(num_features, num_features);
     for n = 1:num_samples_per_class
-        Sw_i = Sw_i + ((training_data(:, n, i) - m_i) * (training_data(:, n, i) - m_i)');
+        S_i = S_i + ((training_data(:, n, i) - m_i) * (training_data(:, n, i) - m_i)');
     end
-    Sw = Sw + Sw_i;
+    Sw = Sw + S_i;
 end
 
 m = m / (num_classes * num_samples_per_class);
@@ -51,16 +53,6 @@ Sb = St - Sw;
 [~, ind] = sort(diag(D), 'descend');
 Vs = V(:, ind);
 
-W = Vs(1:(num_classes - 1), :);
-projected = zeros(num_classes - 1, num_samples_per_class, num_classes);
-
-% Project the original data onto the selected "num_classes - 1"
-% eigenvectors
-
-for i = 1:num_classes
-    for n = 1:num_samples_per_class
-        projected(:, n, i) = W * training_data(:, n, i);
-    end
-end
+principal_components = Vs(1:(num_classes - 1), :);
 
 end

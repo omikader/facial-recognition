@@ -1,8 +1,9 @@
-function [ projected ] = pca( training_data, alpha )
-%PCA Reduces the data parameter down to a lower dimension according to the
-%second parameter alpha, the amount of energy willing to sacrifice.
-%   projected = PCA(training_data, alpha) will return a dataset with a 
-%   lower first dimension.
+function [ principal_components ] = pca(training_data, alpha)
+%PCA Returns the principal components in the form of a matrix according to
+%the second parameter, alpha, which dictates the energy willing to
+%sacrifice.
+%   W = PCA(training_data, alpha) will return the principal components of
+%   the training data.
 
 num_features = size(training_data, 1);
 num_classes = size(training_data, 3);
@@ -60,14 +61,4 @@ for i = 1:size(d)
     end
 end
 
-% Project the dataset onto the eigenvectors corresponding to the largest
-% eigenvalues
-
-W = Vs(1:dimensions, :);
-projected = zeros(dimensions, num_samples_per_class, num_classes);
-
-for i = 1:num_classes
-    for n = 1:num_samples_per_class
-        projected(:, n, i) = W * training_data(:, n, i);
-    end
-end
+principal_components = Vs(1:dimensions, :);
