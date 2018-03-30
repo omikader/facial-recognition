@@ -19,7 +19,14 @@ for i = 1:num_classes
     mu(:, i) = sum / n;
     sum = zeros(num_features, num_features);
     for n = 1:num_samples_per_class
-        sum = sum + (training_data(:, n, i) - mu(:, i))*(training_data(:, n, i) - mu(:, i))';
+        sum = sum + (training_data(:, n, i) - mu(:, i)) * ...
+            (training_data(:, n, i) - mu(:, i))';
     end
-    sigma(:, :, i) = sum / n;
+    
+    % If n < d, add a regularization term to make sigma positive-definite
+    if num_samples_per_class < num_features
+        sigma(:, :, i) = (sum / n) + ((1e-4) * eye(num_features));
+    else
+        sigma(:, :, i) = sum / n;
+    end
 end
