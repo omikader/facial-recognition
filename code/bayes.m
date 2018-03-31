@@ -1,4 +1,4 @@
-function [ predictions ] = bayes( mu, sigma, testing_data )
+function [ predictions ] = bayes(mu, sigma, testing_data)
 %BAYES Computes the class conditional probabilities using the mu and sigma
 %parameters. Since the priors and evidence probabilities are equal, we can
 %safely compare the values of the class conditional to classify.
@@ -16,6 +16,7 @@ predictions = zeros(num_samples_per_class, num_classes);
 
 for i = 1:num_classes
     for n = 1:num_samples_per_class
+        fprintf('Computing Bayes'' probability for class %d, sample, %d\n', i, n);
         max = 0;
         for j = 1:num_classes
             prob = (1/(((2*pi)^(num_features/2))*(sqrt(det(sigma(:, :, j))))))*(exp((-1/2)*(testing_data(:, n, i) - mu(:, j))'*(inv(sigma(:, :, j)))*(testing_data(:, n, i) - mu(:, j))));

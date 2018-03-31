@@ -1,4 +1,4 @@
-function [ mu, sigma ] = mle( training_data )
+function [ mu, sigma ] = mle(training_data)
 %MLE Computes the sample mean and variance of data presumed to be Gaussian
 %   [mu, sigma] = MLE(num_dimensions, training_data) will use maximum
 %   likelihood esimtation to determine the optimal Gaussian sample mean and
@@ -12,6 +12,7 @@ mu = zeros(num_features, num_classes);
 sigma = zeros(num_features, num_features, num_classes);
 
 for i = 1:num_classes
+    fprintf('Computing mu and sigma for class %d\n', i);
     sum = zeros(num_features, 1);
     for n = 1:num_samples_per_class
         sum = sum + training_data(:, n, i);
@@ -25,7 +26,7 @@ for i = 1:num_classes
     
     % If n < d, add a regularization term to make sigma positive-definite
     if num_samples_per_class < num_features
-        sigma(:, :, i) = (sum / n) + ((1e-4) * eye(num_features));
+        sigma(:, :, i) = (sum / n) + eye(num_features);
     else
         sigma(:, :, i) = sum / n;
     end
