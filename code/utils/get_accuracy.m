@@ -1,4 +1,4 @@
-function [ accuracy ] = get_accuracy( predictions, testing_data )
+function [ accuracy ] = get_accuracy(predictions, testing_data)
 %GET_ACCURACY Given the predictions and the testing data, calculate the
 %accuracy of the predictions.
 %   accuracy = GET_ACCURACY(predictions, testing_data) will return the
