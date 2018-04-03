@@ -14,14 +14,27 @@ predictions = zeros(num_samples_per_class, num_classes);
 % Compute the class conditional probability for each testing point and
 % assign the label of the largest probability
 
+W = zeros(num_features, num_features, num_classes);
+w = zeros(num_features, num_classes);
+w_0 = zeros(num_classes, 1);
+
+for i = 1:num_classes
+    inverse = inv(sigma(:, :, i));
+    determinant = det(sigma(:, :, i));
+    
+    W(:, :, i) = (-1/2) * inverse;
+    w(:, i) = mu(:, i)' * inverse;
+    w_0(i) = ((-1/2) * mu(:, i)' * inverse * mu(:, i)) - ((1/2) * log(determinant));
+end
+
 for i = 1:num_classes
     for n = 1:num_samples_per_class
         fprintf('Computing Bayes'' probability for class %d, sample, %d\n', i, n);
-        max = 0;
+        max = intmin;
         for j = 1:num_classes
-            prob = (1/(((2*pi)^(num_features/2))*(sqrt(det(sigma(:, :, j))))))*(exp((-1/2)*(testing_data(:, n, i) - mu(:, j))'*(inv(sigma(:, :, j)))*(testing_data(:, n, i) - mu(:, j))));
-            if prob > max
-                max = prob;
+            g = (testing_data(:, n, i)' * W(:, :, j) * testing_data(:, n, i)) + (w(:, j)' * testing_data(:, n, i)) + w_0(j);
+            if g > max
+                max = g;
                 predictions(n, i) = j;
             end
         end
