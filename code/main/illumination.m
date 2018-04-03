@@ -20,9 +20,8 @@ testing_data = illum(:, 17:21, :);
 % parameters mu and sigma. Then use Bayes' classifier to classify the
 % photos in the illumination dataset.
 
-[mu, sigma] = mle(training_data);
-
-bayesian_predictions = bayes(mu, sigma, testing_data);
+params = mle(training_data, 'gaussian');
+bayesian_predictions = bayes(params, testing_data, 'gaussian');
 bayesian_accuracy = get_accuracy(bayesian_predictions, testing_data);
 
 %% K-Nearest Neighbors Classification

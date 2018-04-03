@@ -31,8 +31,7 @@ testing_data = data(:, 11:13, :);
 % parameters mu and sigma. Then use Bayes' classifier to classify the
 % photos in the pose dataset.
 
-[mu, sigma] = mle(training_data);
-
+params = mle(training_data, 'gaussian');
 bayesian_predictions = bayes(mu, sigma, testing_data);
 bayesian_accuracy = get_accuracy(bayesian_predictions, testing_data);
 
