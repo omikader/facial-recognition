@@ -35,7 +35,7 @@ switch distribution
 
         for i = 1:num_classes
             for n = 1:num_samples_per_class
-                fprintf('Computing Bayes'' probability for class %d, sample, %d\n', i, n);
+                fprintf('Classifying class %d, sample, %d\n', i, n);
                 max = intmin;
                 for j = 1:num_classes
                     g = (testing_data(:, n, i)' * W(:, :, j) * testing_data(:, n, i)) + (w(:, j)' * testing_data(:, n, i)) + w_0(j);
