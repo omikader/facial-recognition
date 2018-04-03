@@ -32,7 +32,7 @@ testing_data = data(:, 11:13, :);
 % photos in the pose dataset.
 
 params = mle(training_data, 'gaussian');
-bayesian_predictions = bayes(mu, sigma, testing_data);
+bayesian_predictions = bayes(params, testing_data, 'gaussian');
 bayesian_accuracy = get_accuracy(bayesian_predictions, testing_data);
 
 %% K-Nearest Neighbors Classification
