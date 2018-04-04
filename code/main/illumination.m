@@ -29,7 +29,7 @@ bayesian_accuracy = get_accuracy(bayesian_predictions, testing_data);
 % dataset
 
 k = 1;
-k_nn_predictions = k_nn(k, training_data, testing_data);
+k_nn_predictions = k_nn(k, training_data, testing_data, 'discard');
 k_nn_accuracy = get_accuracy(k_nn_predictions, testing_data);
 
 %% Principal Component Analysis (PCA)
