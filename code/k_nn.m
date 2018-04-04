@@ -67,7 +67,7 @@ for i = 1:num_classes
                 tie = true;
             end
         end
-        
+      
         % In the event of a tie, use tiebreaker parameter
         if tie
             switch tiebreaker  
@@ -77,11 +77,12 @@ for i = 1:num_classes
                     
                 % If retry is chosen, repeat algorithm with k-1 neighbors 
                 case 'retry'
+                    k_re = k;
                     while tie
-                        k = k - 1;
+                        k_re = k_re - 1;
 
                         count = zeros(num_classes, 1);
-                        for l = 1:k
+                        for l = 1:k_re
                             class = neighbors(l, 2);
                             count(class) = count(class) + 1;
                         end
