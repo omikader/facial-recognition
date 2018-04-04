@@ -1,10 +1,10 @@
-function [ principal_components ] = mda(training_data)
-%MDA Returns the c-1 principal components in the form of a matrix, where c
-%is the total number of classes using Fisher's multiple discriminant
-%analysis.
+function [ transformation_matrix ] = mda(training_data)
+%MDA Returns a transformation matrix to c-1 classes, where c is the total 
+%number of classes in the training data, using Fisher's multiple 
+%discriminant analysis.
 
-%   W = MDA(training_data) will return the principal components of the
-%   training data.
+%   W = MDA(training_data) will return a transformation matrix to c-1
+%   classes.
 
 num_features = size(training_data, 1);
 num_classes = size(training_data, 3);
@@ -53,6 +53,6 @@ Sb = St - Sw;
 [~, ind] = sort(diag(D), 'descend');
 Vs = V(:, ind);
 
-principal_components = Vs(1:(num_classes - 1), :);
+transformation_matrix = Vs(1:(num_classes - 1), :);
 
 end
