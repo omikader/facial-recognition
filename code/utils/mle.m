@@ -21,18 +21,14 @@ switch distribution
                 sum = sum + training_data(:, n, i);
             end
             mu(:, i) = sum / n;
+            
             sum = zeros(num_features, num_features);
             for n = 1:num_samples_per_class
                 sum = sum + (training_data(:, n, i) - mu(:, i)) * ...
                     (training_data(:, n, i) - mu(:, i))';
             end
-
-            % If n < d, add a regularization term to make sigma positive-definite
-            if num_samples_per_class < num_features
-                sigma(:, :, i) = (sum / n) + eye(num_features);
-            else
-                sigma(:, :, i) = sum / n;
-            end
+            % Add a regularization term to make sigma positive-definite
+            sigma(:, :, i) = (sum / n) + eye(num_features);
         end
         params = {mu, sigma};
     otherwise
