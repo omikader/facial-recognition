@@ -12,7 +12,7 @@ num_samples_per_class = size(testing_data, 2);
 predictions = zeros(num_samples_per_class, num_classes);
 
 switch distribution
-    case 'gaussian'
+    case 'normal'
         mu = params{1};
         sigma = params{2};
         

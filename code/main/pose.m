@@ -31,8 +31,8 @@ testing_data = data(:, 11:13, :);
 % parameters mu and sigma. Then use Bayes' classifier to classify the
 % photos in the pose dataset.
 
-params = mle(training_data, 'gaussian');
-bayesian_predictions = bayes(params, testing_data, 'gaussian');
+params = mle(training_data, 'normal');
+bayesian_predictions = bayes(params, testing_data, 'normal');
 bayesian_accuracy = get_accuracy(bayesian_predictions, testing_data);
 
 %% K-Nearest Neighbors Classification

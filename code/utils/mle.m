@@ -10,7 +10,7 @@ num_classes = size(training_data, 3);
 num_samples_per_class = size(training_data, 2);
 
 switch distribution
-    case 'gaussian'
+    case 'normal'
         mu = zeros(num_features, num_classes);
         sigma = zeros(num_features, num_features, num_classes);
 
