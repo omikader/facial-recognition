@@ -1,6 +1,6 @@
 function [ params ] = mle(training_data, distribution)
-%MLE Computes the sample mean and variance of data according to the
-%provided distribution
+%MLE Uses training data to estimats the parameters of a statistical model
+%according to the provided distribution
 %   [mu, sigma] = MLE(training_data, distribution) will use maximum 
 %   likelihood esimtation to determine the optimal parameters that fit the
 %   data to the provided distrubtion.
