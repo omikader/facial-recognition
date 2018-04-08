@@ -32,7 +32,6 @@ predictions = zeros(num_testing_samples_per_class, num_classes);
 
 for i = 1:num_classes
     for m = 1:num_testing_samples_per_class
-        fprintf('Classifying class: %d, sample: %d\n', i, m);
         idx = 1;
         neighbors = zeros(num_classes * num_training_samples_per_class, 2);
         for j = 1:num_classes

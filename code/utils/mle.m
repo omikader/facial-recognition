@@ -15,7 +15,6 @@ switch distribution
         sigma = zeros(num_features, num_features, num_classes);
 
         for i = 1:num_classes
-            fprintf('Computing mu and sigma for class %d\n', i);
             sum = zeros(num_features, 1);
             for n = 1:num_samples_per_class
                 sum = sum + training_data(:, n, i);
