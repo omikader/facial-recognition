@@ -1,8 +1,8 @@
 function [ accuracy ] = get_accuracy(predictions)
 %GET_ACCURACY Given the predictions and the testing data, calculate the
 %accuracy of the predictions.
-%   accuracy = GET_ACCURACY(predictions, testing_data) will return the
-%   correctness (between 0 and 1) of a given model's predictions.
+%   accuracy = GET_ACCURACY(predictions) will return the correctness 
+%   (between 0 and 1) of a given model's predictions.
 
 num_classes = size(predictions, 2);
 num_samples_per_class = size(predictions, 1);
