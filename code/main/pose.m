@@ -50,34 +50,39 @@ k_nn_accuracy = get_accuracy(k_nn_predictions, testing_data);
 alpha = 0.05;
 W_pca = pca(training_data, alpha);
 
+num_classes = size(data, 3);
+num_samples_per_testing_class = size(testing_data, 2);
+num_samples_per_training_class = size(training_data, 2);
+num_principal_components = size(W_pca, 1);
+
 % Project the original dataset onto the principal components
 
-training_proj = zeros(size(W_pca, 1), size(training_data, 2), size(training_data, 3));
-testing_proj = zeros(size(W_pca, 1), size(testing_data, 2), size(testing_data, 3));
+training_proj = zeros(num_principal_components, num_samples_per_training_class, num_classes);
+testing_proj = zeros(num_principal_components, num_samples_per_testing_class, num_classes);
 
-for j = 1:size(training_data, 3)
-    for k = 1:size(training_data, 2)
-        training_proj(:, k, j) = W_pca * training_data(:, k, j);
+for i = 1:num_classes
+    for n = 1:num_samples_per_training_class
+        training_proj(:, n, i) = W_pca * training_data(:, n, i);
     end
 end
 
-for j = 1:size(testing_data, 3)
-    for k = 1:size(testing_data, 2)
-        testing_proj(:, k, j) = W_pca * testing_data(:, k, j);
+for i = 1:num_classes
+    for n = 1:num_samples_per_testing_class
+        testing_proj(:, n, i) = W_pca * testing_data(:, n, i);
     end
 end
 
 % Post PCA Bayesian Classification
 
-params = mle(training_proj, 'normal');
-bayesian_predictions = bayes(params, testing_proj, 'normal');
-bayesian_accuracy = get_accuracy(bayesian_predictions, testing_proj);
+pca_params = mle(training_proj, 'normal');
+pca_bayesian_predictions = bayes(pca_params, testing_proj, 'normal');
+pca_bayesian_accuracy = get_accuracy(pca_bayesian_predictions, testing_proj);
 
 % Post PCA K-NN Classification
 
 k = 1;
-k_nn_predictions = k_nn(k, training_proj, testing_proj, 'discard');
-k_nn_accuracy = get_accuracy(k_nn_predictions, testing_proj);
+pca_k_nn_predictions = k_nn(k, training_proj, testing_proj, 'discard');
+pca_k_nn_accuracy = get_accuracy(pca_k_nn_predictions, testing_proj);
 
 %% Fisher's Multiple Discriminant Analysis (MDA)
 % Use Fisher's linear discriminant analysis technique (generalized for 'c'
