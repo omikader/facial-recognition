@@ -13,7 +13,6 @@ load('data/pose.mat')
 % Reshape images into vector form.
 
 data = zeros(size(pose, 1) * size(pose, 2), 13, 68);
-num_classes = size(data, 3);
 
 for n = 1:size(pose, 3)
     for i = 1:size(pose, 4)
@@ -25,10 +24,7 @@ end
 % Split data into training (~3/4) and testing (~1/4).
 
 training_data = data(:, 1:10, :);
-num_samples_per_training_class = size(training_data, 2);
-
 testing_data = data(:, 11:13, :);
-num_samples_per_testing_class = size(testing_data, 2);
 
 %% Bayesian Classification
 % Use maximum likelihood estimation with Gaussian assumption to estimate
@@ -53,24 +49,10 @@ k_nn_accuracy = get_accuracy(k_nn_predictions);
 
 alpha = 0.05;
 W_pca = pca(training_data, alpha);
-num_principal_components = size(W_pca, 1);
 
 % Project the original dataset onto the principal components
 
-pca_training_proj = zeros(num_principal_components, num_samples_per_training_class, num_classes);
-pca_testing_proj = zeros(num_principal_components, num_samples_per_testing_class, num_classes);
-
-for i = 1:num_classes
-    for n = 1:num_samples_per_training_class
-        pca_training_proj(:, n, i) = W_pca * training_data(:, n, i);
-    end
-end
-
-for i = 1:num_classes
-    for n = 1:num_samples_per_testing_class
-        pca_testing_proj(:, n, i) = W_pca * testing_data(:, n, i);
-    end
-end
+[pca_training_proj, pca_testing_proj] = project(W_pca, training_data, testing_data);
 
 % Post PCA Bayesian Classification
 
@@ -89,24 +71,10 @@ pca_k_nn_accuracy = get_accuracy(pca_k_nn_predictions);
 % classes) for dimensionality reduction.
 
 W_mda = mda(training_data);
-num_principal_components = size(W_mda, 1);
 
-% Project the original dataset onto the principal components
+% Project the original dataset onto the eigenvectors in W
 
-mda_training_proj = zeros(num_principal_components, num_samples_per_training_class, num_classes);
-mda_testing_proj = zeros(num_principal_components, num_samples_per_testing_class, num_classes);
-
-for i = 1:num_classes
-    for n = 1:num_samples_per_training_class
-        mda_training_proj(:, n, i) = W_mda * training_data(:, n, i);
-    end
-end
-
-for i = 1:num_classes
-    for n = 1:num_samples_per_testing_class
-        mda_testing_proj(:, n, i) = W_mda * testing_data(:, n, i);
-    end
-end
+[mda_training_proj, mda_testing_proj] = project(W_mda, training_data, testing_data);
 
 % Post MDA Bayesian Classification
 
