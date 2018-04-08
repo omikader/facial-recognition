@@ -37,14 +37,14 @@ num_samples_per_testing_class = size(testing_data, 2);
 
 params = mle(training_data, 'normal');
 bayesian_predictions = bayes(params, testing_data, 'normal');
-bayesian_accuracy = get_accuracy(bayesian_predictions, testing_data);
+bayesian_accuracy = get_accuracy(bayesian_predictions);
 
 %% K-Nearest Neighbors Classification
 % Use K-Nearest Neighbors to classify the photos in the pose dataset
 
 k = 1;
 k_nn_predictions = k_nn(k, training_data, testing_data, 'closest');
-k_nn_accuracy = get_accuracy(k_nn_predictions, testing_data);
+k_nn_accuracy = get_accuracy(k_nn_predictions);
 
 %% Principal Component Analysis (PCA)
 % Use principal component analysis to reduce the images in the training set
@@ -57,32 +57,32 @@ num_principal_components = size(W_pca, 1);
 
 % Project the original dataset onto the principal components
 
-training_proj = zeros(num_principal_components, num_samples_per_training_class, num_classes);
-testing_proj = zeros(num_principal_components, num_samples_per_testing_class, num_classes);
+pca_training_proj = zeros(num_principal_components, num_samples_per_training_class, num_classes);
+pca_testing_proj = zeros(num_principal_components, num_samples_per_testing_class, num_classes);
 
 for i = 1:num_classes
     for n = 1:num_samples_per_training_class
-        training_proj(:, n, i) = W_pca * training_data(:, n, i);
+        pca_training_proj(:, n, i) = W_pca * training_data(:, n, i);
     end
 end
 
 for i = 1:num_classes
     for n = 1:num_samples_per_testing_class
-        testing_proj(:, n, i) = W_pca * testing_data(:, n, i);
+        pca_testing_proj(:, n, i) = W_pca * testing_data(:, n, i);
     end
 end
 
 % Post PCA Bayesian Classification
 
-pca_params = mle(training_proj, 'normal');
-pca_bayesian_predictions = bayes(pca_params, testing_proj, 'normal');
-pca_bayesian_accuracy = get_accuracy(pca_bayesian_predictions, testing_proj);
+pca_params = mle(pca_training_proj, 'normal');
+pca_bayesian_predictions = bayes(pca_params, pca_testing_proj, 'normal');
+pca_bayesian_accuracy = get_accuracy(pca_bayesian_predictions);
 
 % Post PCA K-NN Classification
 
 k = 1;
-pca_k_nn_predictions = k_nn(k, training_proj, testing_proj, 'closest');
-pca_k_nn_accuracy = get_accuracy(pca_k_nn_predictions, testing_proj);
+pca_k_nn_predictions = k_nn(k, pca_training_proj, pca_testing_proj, 'closest');
+pca_k_nn_accuracy = get_accuracy(pca_k_nn_predictions);
 
 %% Fisher's Multiple Discriminant Analysis (MDA)
 % Use Fisher's linear discriminant analysis technique (generalized for 'c'
@@ -93,29 +93,29 @@ num_principal_components = size(W_mda, 1);
 
 % Project the original dataset onto the principal components
 
-training_proj = zeros(num_principal_components, num_samples_per_training_class, num_classes);
-testing_proj = zeros(num_principal_components, num_samples_per_testing_class, num_classes);
+mda_training_proj = zeros(num_principal_components, num_samples_per_training_class, num_classes);
+mda_testing_proj = zeros(num_principal_components, num_samples_per_testing_class, num_classes);
 
 for i = 1:num_classes
     for n = 1:num_samples_per_training_class
-        training_proj(:, n, i) = W_mda * training_data(:, n, i);
+        mda_training_proj(:, n, i) = W_mda * training_data(:, n, i);
     end
 end
 
 for i = 1:num_classes
     for n = 1:num_samples_per_testing_class
-        testing_proj(:, n, i) = W_mda * testing_data(:, n, i);
+        mda_testing_proj(:, n, i) = W_mda * testing_data(:, n, i);
     end
 end
 
 % Post MDA Bayesian Classification
 
-mda_params = mle(training_proj, 'normal');
-mda_bayesian_predictions = bayes(mda_params, testing_proj, 'normal');
-mda_bayesian_accuracy = get_accuracy(mda_bayesian_predictions, testing_proj);
+mda_params = mle(mda_training_proj, 'normal');
+mda_bayesian_predictions = bayes(mda_params, mda_testing_proj, 'normal');
+mda_bayesian_accuracy = get_accuracy(mda_bayesian_predictions);
 
 % Post MDA K-NN Classification
 
 k = 1;
-mda_k_nn_predictions = k_nn(k, training_proj, testing_proj, 'closest');
-mda_k_nn_accuracy = get_accuracy(mda_k_nn_predictions, testing_proj);
+mda_k_nn_predictions = k_nn(k, mda_training_proj, mda_testing_proj, 'closest');
+mda_k_nn_accuracy = get_accuracy(mda_k_nn_predictions);

@@ -37,14 +37,14 @@ num_samples_per_testing_class = size(testing_data, 2);
 
 params = mle(training_data, 'normal');
 bayesian_predictions = bayes(params, testing_data, 'normal');
-bayesian_accuracy = get_accuracy(bayesian_predictions, testing_data);
+bayesian_accuracy = get_accuracy(bayesian_predictions);
 
 %% K-Nearest Neighbors Classification
 % Use K-Nearest Neighbors to classify the photos in the face dataset
 
 k = 1;
 k_nn_predictions = k_nn(k, training_data, testing_data, 'closest');
-k_nn_accuracy = get_accuracy(k_nn_predictions, testing_data);
+k_nn_accuracy = get_accuracy(k_nn_predictions);
 
 %% Principal Component Analysis (PCA)
 % Use principal component analysis to reduce the images in the training set
@@ -76,13 +76,13 @@ end
 
 pca_params = mle(pca_training_proj, 'normal');
 pca_bayesian_predictions = bayes(pca_params, pca_testing_proj, 'normal');
-pca_bayesian_accuracy = get_accuracy(pca_bayesian_predictions, pca_testing_proj);
+pca_bayesian_accuracy = get_accuracy(pca_bayesian_predictions);
 
 % Post PCA K-NN Classification
 
 k = 1;
 pca_k_nn_predictions = k_nn(k, pca_training_proj, pca_testing_proj, 'closest');
-pca_k_nn_accuracy = get_accuracy(pca_k_nn_predictions, pca_testing_proj);
+pca_k_nn_accuracy = get_accuracy(pca_k_nn_predictions);
 
 %% Fisher's Multiple Discriminant Analysis (MDA)
 % Use Fisher's linear discriminant analysis technique (generalized for 'c'
@@ -112,10 +112,10 @@ end
 
 mda_params = mle(mda_training_proj, 'normal');
 mda_bayesian_predictions = bayes(mda_params, mda_testing_proj, 'normal');
-mda_bayesian_accuracy = get_accuracy(mda_bayesian_predictions, mda_testing_proj);
+mda_bayesian_accuracy = get_accuracy(mda_bayesian_predictions);
 
 % Post MDA K-NN Classification
 
 k = 1;
 mda_k_nn_predictions = k_nn(k, mda_training_proj, mda_testing_proj, 'closest');
-mda_k_nn_accuracy = get_accuracy(mda_k_nn_predictions, mda_testing_proj);
+mda_k_nn_accuracy = get_accuracy(mda_k_nn_predictions);
