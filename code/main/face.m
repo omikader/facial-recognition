@@ -81,7 +81,7 @@ pca_bayesian_accuracy = get_accuracy(pca_bayesian_predictions, testing_proj);
 % Post PCA K-NN Classification
 
 k = 1;
-pca_k_nn_predictions = k_nn(k, training_proj, testing_proj, 'discard');
+pca_k_nn_predictions = k_nn(k, training_proj, testing_proj, 'closest');
 pca_k_nn_accuracy = get_accuracy(pca_k_nn_predictions, testing_proj);
 
 %% Fisher's Multiple Discriminant Analysis (MDA)
@@ -89,3 +89,37 @@ pca_k_nn_accuracy = get_accuracy(pca_k_nn_predictions, testing_proj);
 % classes) for dimensionality reduction.
 
 W_mda = mda(training_data);
+
+num_classes = size(data, 3);
+num_samples_per_testing_class = size(testing_data, 2);
+num_samples_per_training_class = size(training_data, 2);
+num_principal_components = size(W_mda, 1);
+
+% Project the original dataset onto the principal components
+
+training_proj = zeros(num_principal_components, num_samples_per_training_class, num_classes);
+testing_proj = zeros(num_principal_components, num_samples_per_testing_class, num_classes);
+
+for i = 1:num_classes
+    for n = 1:num_samples_per_training_class
+        training_proj(:, n, i) = W_mda * training_data(:, n, i);
+    end
+end
+
+for i = 1:num_classes
+    for n = 1:num_samples_per_testing_class
+        testing_proj(:, n, i) = W_mda * testing_data(:, n, i);
+    end
+end
+
+% Post MDA Bayesian Classification
+
+mda_params = mle(training_proj, 'normal');
+mda_bayesian_predictions = bayes(mda_params, testing_proj, 'normal');
+mda_bayesian_accuracy = get_accuracy(mda_bayesian_predictions, testing_proj);
+
+% Post MDA K-NN Classification
+
+k = 1;
+mda_k_nn_predictions = k_nn(k, training_proj, testing_proj, 'closest');
+mda_k_nn_accuracy = get_accuracy(mda_k_nn_predictions, testing_proj);
