@@ -12,8 +12,13 @@ load('data/illumination.mat')
 %% Divide Data
 % Split data into training (~3/4) and testing (~1/4).
 
+num_classes = size(illum, 3);
+
 training_data = illum(:, 1:16, :);
+num_samples_per_training_class = size(training_data, 2);
+
 testing_data = illum(:, 17:21, :);
+num_samples_per_testing_class = size(testing_data, 2);
 
 %% Bayesian Classification
 % Use maximum likelihood estimation with Gaussian assumption to estimate
@@ -39,10 +44,6 @@ k_nn_accuracy = get_accuracy(k_nn_predictions, testing_data);
 
 alpha = 0.05;
 W_pca = pca(training_data, alpha);
-
-num_classes = size(illum, 3);
-num_samples_per_testing_class = size(testing_data, 2);
-num_samples_per_training_class = size(training_data, 2);
 num_principal_components = size(W_pca, 1);
 
 % Project the original dataset onto the principal components
@@ -79,10 +80,6 @@ pca_k_nn_accuracy = get_accuracy(pca_k_nn_predictions, testing_proj);
 % classes) for dimensionality reduction.
 
 W_mda = mda(training_data);
-
-num_classes = size(illum, 3);
-num_samples_per_testing_class = size(testing_data, 2);
-num_samples_per_training_class = size(training_data, 2);
 num_principal_components = size(W_mda, 1);
 
 % Project the original dataset onto the principal components

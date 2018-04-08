@@ -13,6 +13,7 @@ load('data/face.mat')
 % Separate images by class and reshape images into vector form.
 
 data = zeros(size(face, 1) * size(face, 2), 3, 200);
+num_classes = size(data, 3);
 
 for n = 1:200
     data(:, 1, n) = reshape(face(:, :, 3*n-2), [504, 1]);
@@ -24,7 +25,10 @@ end
 % Split data into training (~2/3) and testing (~1/3).
 
 training_data = data(:, 1:2, :);
+num_samples_per_training_class = size(training_data, 2);
+
 testing_data = data(:, 3, :);
+num_samples_per_testing_class = size(testing_data, 2);
 
 %% Bayesian Classification
 % Use maximum likelihood estimation with Gaussian assumption to estimate
@@ -49,77 +53,69 @@ k_nn_accuracy = get_accuracy(k_nn_predictions, testing_data);
 
 alpha = 0.05;
 W_pca = pca(training_data, alpha);
-
-num_classes = size(data, 3);
-num_samples_per_testing_class = size(testing_data, 2);
-num_samples_per_training_class = size(training_data, 2);
 num_principal_components = size(W_pca, 1);
 
 % Project the original dataset onto the principal components
 
-training_proj = zeros(num_principal_components, num_samples_per_training_class, num_classes);
-testing_proj = zeros(num_principal_components, num_samples_per_testing_class, num_classes);
+pca_training_proj = zeros(num_principal_components, num_samples_per_training_class, num_classes);
+pca_testing_proj = zeros(num_principal_components, num_samples_per_testing_class, num_classes);
 
 for i = 1:num_classes
     for n = 1:num_samples_per_training_class
-        training_proj(:, n, i) = W_pca * training_data(:, n, i);
+        pca_training_proj(:, n, i) = W_pca * training_data(:, n, i);
     end
 end
 
 for i = 1:num_classes
     for n = 1:num_samples_per_testing_class
-        testing_proj(:, n, i) = W_pca * testing_data(:, n, i);
+        pca_testing_proj(:, n, i) = W_pca * testing_data(:, n, i);
     end
 end
 
 % Post PCA Bayesian Classification
 
-pca_params = mle(training_proj, 'normal');
-pca_bayesian_predictions = bayes(pca_params, testing_proj, 'normal');
-pca_bayesian_accuracy = get_accuracy(pca_bayesian_predictions, testing_proj);
+pca_params = mle(pca_training_proj, 'normal');
+pca_bayesian_predictions = bayes(pca_params, pca_testing_proj, 'normal');
+pca_bayesian_accuracy = get_accuracy(pca_bayesian_predictions, pca_testing_proj);
 
 % Post PCA K-NN Classification
 
 k = 1;
-pca_k_nn_predictions = k_nn(k, training_proj, testing_proj, 'closest');
-pca_k_nn_accuracy = get_accuracy(pca_k_nn_predictions, testing_proj);
+pca_k_nn_predictions = k_nn(k, pca_training_proj, pca_testing_proj, 'closest');
+pca_k_nn_accuracy = get_accuracy(pca_k_nn_predictions, pca_testing_proj);
 
 %% Fisher's Multiple Discriminant Analysis (MDA)
 % Use Fisher's linear discriminant analysis technique (generalized for 'c'
 % classes) for dimensionality reduction.
 
 W_mda = mda(training_data);
-
-num_classes = size(data, 3);
-num_samples_per_testing_class = size(testing_data, 2);
-num_samples_per_training_class = size(training_data, 2);
 num_principal_components = size(W_mda, 1);
 
 % Project the original dataset onto the principal components
 
-training_proj = zeros(num_principal_components, num_samples_per_training_class, num_classes);
-testing_proj = zeros(num_principal_components, num_samples_per_testing_class, num_classes);
+mda_training_proj = zeros(num_principal_components, num_samples_per_training_class, num_classes);
+mda_testing_proj = zeros(num_principal_components, num_samples_per_testing_class, num_classes);
 
 for i = 1:num_classes
     for n = 1:num_samples_per_training_class
-        training_proj(:, n, i) = W_mda * training_data(:, n, i);
+        mda_training_proj(:, n, i) = W_mda * training_data(:, n, i);
     end
 end
 
 for i = 1:num_classes
     for n = 1:num_samples_per_testing_class
-        testing_proj(:, n, i) = W_mda * testing_data(:, n, i);
+        mda_testing_proj(:, n, i) = W_mda * testing_data(:, n, i);
     end
 end
 
 % Post MDA Bayesian Classification
 
-mda_params = mle(training_proj, 'normal');
-mda_bayesian_predictions = bayes(mda_params, testing_proj, 'normal');
-mda_bayesian_accuracy = get_accuracy(mda_bayesian_predictions, testing_proj);
+mda_params = mle(mda_training_proj, 'normal');
+mda_bayesian_predictions = bayes(mda_params, mda_testing_proj, 'normal');
+mda_bayesian_accuracy = get_accuracy(mda_bayesian_predictions, mda_testing_proj);
 
 % Post MDA K-NN Classification
 
 k = 1;
-mda_k_nn_predictions = k_nn(k, training_proj, testing_proj, 'closest');
-mda_k_nn_accuracy = get_accuracy(mda_k_nn_predictions, testing_proj);
+mda_k_nn_predictions = k_nn(k, mda_training_proj, mda_testing_proj, 'closest');
+mda_k_nn_accuracy = get_accuracy(mda_k_nn_predictions, mda_testing_proj);
