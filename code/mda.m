@@ -1,9 +1,9 @@
 function [ transformation_matrix ] = mda(training_data)
 %MDA Returns a transformation matrix to c-1 classes, where c is the total 
-%number of classes in the training data, using Fisher's multiple 
-%discriminant analysis.
-%   W = MDA(training_data) will return a transformation matrix to c-1
-%   classes.
+%number of classes in the data, using Fisher's multiple discriminant 
+%analysis.
+%   W = MDA(training_data) will return a transformation matrix of size c-1,
+%   where c is the number of classes.
 
 num_features = size(training_data, 1);
 num_classes = size(training_data, 3);

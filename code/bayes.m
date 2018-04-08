@@ -3,7 +3,7 @@ function [ predictions ] = bayes(params, testing_data, distribution)
 %using the parameters derived from the maximum likelihood estimation of the
 %training data.
 %   predictions = BAYES(params, testing_data, distribution) will return a 
-%   matrix with the Bayes' classifier prediction for each test data point.
+%   matrix with the Bayes' classifier prediction for each testing sample.
 
 num_features = size(testing_data, 1);
 num_classes = size(testing_data, 3);
