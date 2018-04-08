@@ -3,7 +3,7 @@ Implement basic classifiers (Bayes', K-Nearest Neighbors, PCA, LDA) in MATLAB to
  
 ## Introduction
  
-For a formal definition of the assignment, please see the project [description](docs/proj01.pdf). For a summary of the results, please see my final report.
+For a formal definition of the assignment, please see the project [description](docs/proj01.pdf). For a summary of the results, please see my [final report](docs/final_report.pdf).
 
 ## How to Run the Code
 
