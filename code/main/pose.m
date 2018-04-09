@@ -47,7 +47,7 @@ k_nn_accuracy = get_accuracy(k_nn_predictions);
 % down to a lower dimension feature set. Parameter alpha to choose how much
 % energy willing to sacrifice.
 
-alpha = 0.05;
+alpha = 0.12;
 W_pca = pca(training_data, alpha);
 
 % Project the original dataset onto the principal components
@@ -75,8 +75,8 @@ W_mda = mda(training_data);
 
 % Project the original dataset onto the eigenvectors in W
 
-mda_training_proj = project(W_pca, training_data);
-mda_testing_proj = project(W_pca, testing_data);
+mda_training_proj = project(W_mda, training_data);
+mda_testing_proj = project(W_mda, testing_data);
 
 % Post MDA Bayesian Classification
 
