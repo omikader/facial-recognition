@@ -74,7 +74,8 @@ W_mda = mda(training_data);
 
 % Project the original dataset onto the eigenvectors in W
 
-[mda_training_proj, mda_testing_proj] = project(W_mda, training_data, testing_data);
+pca_training_proj = project(W_pca, training_data);
+pca_testing_proj = project(W_pca, testing_data);
 
 % Post MDA Bayesian Classification
 
