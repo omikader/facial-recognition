@@ -23,4 +23,4 @@ For each dataset, I divide the script into the following sections:
   * Bayesian Classification after LDA
   * K-Nearest Neighbors Classification after LDA
   
-Each script can be run its entirety, or run one section at a time to observe and analyze the results for the given section. All input data can be found in the [data](data/) directory in the form of `.mat` files.
+Each script can be run its entirety, or run one section at a time to observe and analyze the results for the given section. All input data can be found in the [data](data/) directory in the form of `.mat` files. For any help or clarification, please review the help text to understand how each of the functions are meant to be used.
