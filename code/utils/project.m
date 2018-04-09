@@ -10,7 +10,7 @@ num_samples_per_class = size(input_data, 2);
 proj_data = zeros(num_principal_components, num_samples_per_class, num_classes);
 
 for i = 1:num_classes
-    for n = 1:num_samples_per_training_class
+    for n = 1:num_samples_per_class
         proj_data(:, n, i) = W * input_data(:, n, i);
     end
 end
