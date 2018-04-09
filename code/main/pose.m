@@ -52,7 +52,8 @@ W_pca = pca(training_data, alpha);
 
 % Project the original dataset onto the principal components
 
-[pca_training_proj, pca_testing_proj] = project(W_pca, training_data, testing_data);
+pca_training_proj = project(W_pca, training_data);
+pca_testing_proj = project(W_pca, testing_data);
 
 % Post PCA Bayesian Classification
 
@@ -74,8 +75,8 @@ W_mda = mda(training_data);
 
 % Project the original dataset onto the eigenvectors in W
 
-pca_training_proj = project(W_pca, training_data);
-pca_testing_proj = project(W_pca, testing_data);
+mda_training_proj = project(W_pca, training_data);
+mda_testing_proj = project(W_pca, testing_data);
 
 % Post MDA Bayesian Classification
 
