@@ -9,6 +9,72 @@ num_features = size(training_data, 1);
 num_classes = size(training_data, 3);
 num_samples_per_class = size(training_data, 2);
 
+% S_w = zeros(num_features, num_features);
+% S_b = zeros(num_features, num_features);
+% m = mean(mean(training_data, 3), 2);
+% 
+% for i = 1:num_classes
+%     m_i = mean(training_data(:, :, i), 2);
+%     S_b = S_b + (num_samples_per_class * ((m_i - m) * (m_i - m)'));
+%     S_i = zeros(num_features, num_features);
+%     for n = 1:num_samples_per_class
+%         S_i = S_i + (training_data(:, n, i) - m_i) * (training_data(:, n, i) - m_i)';
+%     end
+%     S_w = S_w + S_i;
+% end
+% 
+% [V, D] = eig(S_b, S_w);
+% [~, ind] = sort(diag(D), 'descend');
+% Vs = V(:, ind);
+% 
+% transformation_matrix = Vs(:, 1:(num_classes - 1));
+
+
+
+
+
+
+
+
+
+% m_i = zeros(num_features, num_classes);
+% S_i = zeros(num_features, num_features, num_classes);
+% for i = 1:num_classes
+%     for n = 1:num_samples_per_class
+%         m_i(:, i) = m_i(:, i) + training_data(:, n, i);
+%     end
+%     m_i(:, i) = m_i(:, i) / num_samples_per_class;
+%     
+%     for n = 1:num_samples_per_class
+%         S_i(:, :, i) = S_i(:, :, i) + (training_data(:, n, i) - m_i(:, i)) * (training_data(:, n, i) - m_i(:,i ))';
+%     end
+% end
+% 
+% S_w = sum(S_i, 3);
+% m = sum(m_i, 2) / num_classes;
+% 
+% S_t = zeros(num_features, num_features);
+% for i = 1:num_classes
+%     for n = 1:num_samples_per_class
+%         S_t = S_t + (training_data(:, n, i) - m) * (training_data(:, n, i) - m)';
+%     end
+% end
+% 
+% S_b = S_t - S_w;
+% 
+% [V, D] = eig(S_b, S_w);
+% [~, ind] = sort(diag(D), 'descend');
+% Vs = V(:, ind);
+% 
+% transformation_matrix = Vs(:, 1:(num_classes - 1));
+
+
+
+
+
+
+
+
 Sw = zeros(num_features, num_features);
 m = zeros(num_features, 1);
 
@@ -52,6 +118,6 @@ Sb = St - Sw;
 [~, ind] = sort(diag(D), 'descend');
 Vs = V(:, ind);
 
-transformation_matrix = Vs(1:(num_classes - 1), :);
+transformation_matrix = Vs(:, 1:(num_classes - 1));
 
 end

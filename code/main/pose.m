@@ -47,7 +47,7 @@ k_nn_accuracy = get_accuracy(k_nn_predictions);
 % down to a lower dimension feature set. Parameter alpha to choose how much
 % energy willing to sacrifice.
 
-alpha = 0.12;
+alpha = 0.05;
 W_pca = pca(training_data, alpha);
 
 % Project the original dataset onto the principal components
@@ -71,7 +71,7 @@ pca_k_nn_accuracy = get_accuracy(pca_k_nn_predictions);
 % Use Fisher's linear discriminant analysis technique (generalized for 'c'
 % classes) for dimensionality reduction.
 
-W_mda = mda(training_data);
+W_mda = mda(training_data)';
 
 % Project the original dataset onto the eigenvectors in W
 

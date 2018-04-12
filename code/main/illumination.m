@@ -61,7 +61,7 @@ pca_k_nn_accuracy = get_accuracy(pca_k_nn_predictions);
 % Use Fisher's linear discriminant analysis technique (generalized for 'c'
 % classes) for dimensionality reduction.
 
-W_mda = mda(training_data);
+W_mda = mda(training_data)';
 
 % Project the original dataset onto the eigenvectors in W
 
