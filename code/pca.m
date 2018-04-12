@@ -61,4 +61,4 @@ for i = 1:size(d)
     end
 end
 
-principal_components = Vs(1:dimensions, :);
+principal_components = Vs(:, 1:dimensions);

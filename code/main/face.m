@@ -48,7 +48,7 @@ k_nn_accuracy = get_accuracy(k_nn_predictions);
 % energy willing to sacrifice.
 
 alpha = 0.05;
-W_pca = pca(training_data, alpha);
+W_pca = pca(training_data, alpha)';
 
 % Project the original dataset onto the principal components
 
