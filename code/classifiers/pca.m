@@ -9,22 +9,17 @@ num_features = size(training_data, 1);
 num_classes = size(training_data, 3);
 num_samples_per_class = size(training_data, 2);
 
+% Define total mean vector of the data
+
+m = mean(mean(training_data, 3), 2);
+
 % Center the datapoints
 
 centered = zeros(size(training_data));
-mean = zeros(size(training_data, 1), 1);
 
 for i = 1:num_classes
     for n = 1:num_samples_per_class
-        mean = mean + training_data(:, n, i);
-    end
-end
-
-mean = mean / (num_classes * num_samples_per_class);
-
-for i = 1:num_classes
-    for n = 1:num_samples_per_class
-        centered(:, n, i) = training_data(:, n, i) - mean;
+        centered(:, n, i) = training_data(:, n, i) - m;
     end
 end
 

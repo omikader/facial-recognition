@@ -8,7 +8,7 @@
 dataset = 'face';
 training_ratio = (2/3);
 
-[training_data, testing_data] = preprocess(datset, training_ratio);
+[training_data, testing_data] = preprocess(dataset, training_ratio);
 
 % Initialize Table Variables
 
