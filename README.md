@@ -7,13 +7,13 @@ For a formal definition of the assignment, please see the project [description](
 
 ## How to Run the Code
 
-In order to keep the code readable and modular, each of the classifier and dimension reduction techniques have been implemented in separate MATLAB functions located at the top level of the [code](code/) directory. Helper functions are conveniently located in the [utils](code/utils/) directory. Each dataset is processed in separate MATLAB scripts located in the [main](code/main/) directory.
+In order to keep the code readable and modular, each of the classifier and dimension reduction techniques have been implemented in separate MATLAB functions located in the [classifiers](code/classifiers) directory. Helper functions are conveniently located in the [utils](code/utils/) directory. The [main](code/main.m) script is located in the top level of the code directory.
 
-For each dataset, I divide the script into the following sections:
+I have divided the script into the following sections:
 
-* Load Variables
 * Preprocess Data
-* Divide Data (Training and Testing)
+  * Load Variables
+  * Divide Data (Training and Testing)
 * Bayesian Classification
 * K-Nearest Neighbors Classification
 * Principal Component Analysis (PCA)
@@ -23,4 +23,6 @@ For each dataset, I divide the script into the following sections:
   * Bayesian Classification after LDA
   * K-Nearest Neighbors Classification after LDA
   
-Each script can be run its entirety, or run one section at a time to observe and analyze the results for the given section. All input data can be found in the [data](data/) directory in the form of `.mat` files. For any help or clarification, please review the help text to understand how each of the functions are meant to be used.
+The main file contains initial conditions and parameters for different circumstances. To test different functionality, simply modify those state conditions variables.
+  
+The script can be run its entirety, or one section at a time to observe and analyze the results for the given section. At the end of the script, the results of each classification technique are displayed in a table. All input data can be found in the [data](data/) directory in the form of `.mat` files. For any help or clarification, please review the help text to understand how each of the functions are meant to be used.
