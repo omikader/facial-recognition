@@ -3,11 +3,14 @@
 
 %% Preprocess Data
 % Load images from .mat files, reshape images into feature vector form, and
-% divide into training and testing data
+% divide into training and testing data.
 
-[training_data, testing_data] = preprocess('face', (2/3));
+dataset = 'face';
+training_ratio = (2/3);
 
-%% Initialize Table Variables
+[training_data, testing_data] = preprocess(datset, training_ratio);
+
+% Initialize Table Variables
 
 MODE = {};
 ACCURACY = {};
@@ -16,7 +19,7 @@ PARAMS = {};
 %% Bayesian Classification
 % Use maximum likelihood estimation with Gaussian assumption to estimate
 % parameters mu and sigma. Then use Bayes' classifier to classify the
-% photos in the face dataset.
+% images in the dataset.
 
 distribution = 'normal';
 
@@ -31,7 +34,7 @@ PARAMS = vertcat(PARAMS, strcat('distribution=', distribution));
 ACCURACY = vertcat(ACCURACY, accuracy);
 
 %% K-Nearest Neighbors Classification
-% Use K-Nearest Neighbors to classify the photos in the face dataset
+% Use K-Nearest Neighbors to classify the images in the dataset.
 
 k = 1;
 tiebreaker = 'closest';
@@ -90,7 +93,8 @@ ACCURACY = vertcat(ACCURACY, accuracy);
 % Use Fisher's linear discriminant analysis technique (generalized for 'c'
 % classes) for dimensionality reduction.
 
-W = mda(training_data)';
+num_dimensions = 200;
+W = mda(training_data, num_dimensions)';
 
 % Project the original dataset onto the eigenvectors in W
 
@@ -108,7 +112,7 @@ accuracy = get_accuracy(predictions);
 % Add elements to table variables
 
 MODE = vertcat(MODE, {'MDA Bayes'''});
-PARAMS = vertcat(PARAMS, strcat('distribution=', distribution));
+PARAMS = vertcat(PARAMS, strcat('num_dimensions=', num2str(num_dimensions), ', distribution=', distribution));
 ACCURACY = vertcat(ACCURACY, accuracy);
 
 % Post MDA K-NN Classification
@@ -122,7 +126,7 @@ accuracy = get_accuracy(predictions);
 % Add elements to table variables
 
 MODE = vertcat(MODE, {'MDA K-NN'});
-PARAMS = vertcat(PARAMS, strcat('k=', num2str(k), ', tiebreaker=', tiebreaker));
+PARAMS = vertcat(PARAMS, strcat('num_dimensions=', num2str(num_dimensions), ', k=', num2str(k), ', tiebreaker=', tiebreaker));
 ACCURACY = vertcat(ACCURACY, accuracy);
 
 %% Create Table

@@ -1,4 +1,4 @@
-function [ principal_components ] = pca(training_data, alpha)
+function [ W ] = pca(training_data, alpha)
 %PCA Returns the principal components in the form of a matrix according to
 %the second parameter, alpha, which dictates the energy willing to
 %sacrifice.
@@ -61,4 +61,4 @@ for i = 1:size(d)
     end
 end
 
-principal_components = Vs(:, 1:dimensions);
+W = Vs(:, 1:dimensions);
