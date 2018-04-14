@@ -34,10 +34,14 @@ for i = 1:num_classes
     S_w = S_w + S_i;
 end
 
+% Add a regularization term to make S_w positive-definite
+
+S_w = S_w + eye(num_features);
+
 % Solve the generalized eigenvalue problem and select the eigenvalues of
 % the "num_dimensions" largest eigenvalues
 
-[V, D] = eig(pinv(S_w)*S_b);
+[V, D] = eig(S_b, S_w);
 [~, ind] = sort(diag(D), 'descend');
 Vs = V(:, ind);
 
