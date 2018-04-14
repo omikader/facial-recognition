@@ -16,8 +16,8 @@ data = permute(data, vec);
 
 % Split into training and testing data
 
-training_data = data(:, 1:150, :);
-testing_data = data(:, 151:end, :);
+training_data = data(:, 1:170, :);
+testing_data = data(:, 171:end, :);
 
 % Initialize Table Variables
 
