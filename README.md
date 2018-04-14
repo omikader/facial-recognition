@@ -29,4 +29,4 @@ The script can be run its entirety, or one section at a time to observe and anal
 
 ## Extra Credit
 
-The extra credit script is written in the same format as the main script. In this script, I split the [face](data/face.mat) dataset 3 different classes corresponding to the states of "Happy", "Neutral" and "Illuminated". I used this data to train the classifiers to detect the state of a given subject, as opposed to recognizing the subject themselves.
+The extra credit [script](code/extra_credit.m) is written in the same format as the main script. In this script, I split the [face](data/face.mat) dataset 3 different classes corresponding to the states of "Happy", "Neutral" and "Illuminated". I used this data to train the classifiers to detect the state of a given subject, as opposed to recognizing the subject themselves.
