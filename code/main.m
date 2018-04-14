@@ -93,7 +93,7 @@ ACCURACY = vertcat(ACCURACY, accuracy);
 % Use Fisher's linear discriminant analysis technique (generalized for 'c'
 % classes) for dimensionality reduction.
 
-num_dimensions = 200;
+num_dimensions = 50;
 W = mda(training_data, num_dimensions)';
 
 % Project the original dataset onto the eigenvectors in W
