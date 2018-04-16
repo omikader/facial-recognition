@@ -25,7 +25,11 @@ I have divided the script into the following sections:
   
 The main file contains initial conditions and parameters for different circumstances. To test different functionality, simply modify those state conditions variables.
   
-The script can be run its entirety, or one section at a time to observe and analyze the results for the given section. At the end of the script, the results of each classification technique are displayed in a table. All input data can be found in the [data](data/) directory in the form of `.mat` files. For any help or clarification, please review the help text to understand how each of the functions are meant to be used.
+The script can be run its entirety, or one section at a time to observe and analyze the results for the given section. At the end of the script, the results of each classification technique are displayed in a table. 
+
+![Face Data Set Example Table](/img/table.png)
+
+All input data can be found in the [data](data/) directory in the form of `.mat` files. For any help or clarification, please review the help text to understand how each of the functions are meant to be used.
 
 ## Extra Credit
 
